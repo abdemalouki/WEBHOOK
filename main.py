@@ -3,16 +3,16 @@ import subprocess
 
 app = Flask(__name__)
 
-@app.route('/github-webhook', methods=['POST'])
-def github_webhook():
-    payload = request.json
-    print("Webhook recibido:", payload)
+@app.route('/ejecutar', methods=['GET'])
+def ejecutar_codigo():
+    # Puedes pasar parámetros opcionales desde la URL, ejemplo: ?nombre=juan
+    nombre = request.args.get('nombre', 'desconocido')
+    print(f"Petición recibida de: {nombre}")
 
-    # Aquí puedes ejecutar tu código o script
-    # Por ejemplo, ejecutar un script Python:
-    subprocess.run(["python3", "mi_script.py"])
+    # Ejecuta tu script
+    subprocess.run(["python3", "mi.py"])
 
-    return "OK", 200
+    return f"Código ejecutado por {nombre}", 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
