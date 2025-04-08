@@ -24,4 +24,3 @@ jobs:
     - name: Ejecutar script principal
       run: |
         python main.py
-
