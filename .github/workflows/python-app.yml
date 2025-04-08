@@ -23,4 +23,5 @@ jobs:
 
     - name: Ejecutar script principal
       run: |
+        pytest
         python main.py
