@@ -1,27 +1,23 @@
-name: Ejecutar script con webhook
+name: Ejecutar script DocuWare1
 
 on:
   repository_dispatch:
     types: [webhook-disparado]
+  workflow_dispatch:  # permite que se dispare desde la API
 
 jobs:
-  ejecutar:
+  run-docuware-script:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
 
-    - name: Configurar Python
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.10"
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Instalar dependencias
-      run: |
-        python -m pip install --upgrade pip
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Ejecutar script principal
+        run: python main.py
 
-    - name: Ejecutar script principal
-      run: |
-        pytest
-        python main.py
